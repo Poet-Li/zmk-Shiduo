@@ -1,0 +1,27 @@
+# 任务概览
+
+我有两把键盘在旧版本的zmk(v0.3)上可以正常编译，但无法在最新版本zmk上编译。现在请你帮我写代码，在最新的zmk仓库中，增加我这两把键盘的内容，可以正常编译生成固件。
+
+## 文件结构
+
+- `/v0.3`:两把键盘在旧版本的zmk上可以正常编译的相关代码，是使用zmk官方Github action的代码。
+- `/v0.3/zmk-config-free3X`:键盘`free3X`的旧版本zmk代码。
+- `/v0.3/zmk-config-shiduo3400`:键盘`shiduo3400`的旧版本zmk代码。
+- `/app/boards/free3X`:`free3X`的代码存放的地方
+- `/app/boards/shiduo3400`:`shiduo3400`的代码存放的地方
+- `/.venv`:已经配好了本地west运行的虚拟环境，本次任务中本地west编译运行。
+
+## 测试代码的方法
+
+- 使用`.\.venv\Scripts\Activate.ps1` `cd app` `west <something>`一系列命令来编译生成固件。
+- 可以无报错地生成相关的`zmk.uf2`文件时，则说明任务完成。
+
+## 代码要求
+
+- 你只能在`/app/boards/free3X`和`/app/boards/shiduo3400`中新增或修改代码。
+- 尽量使用`/v0.3`中的代码或zmk仓库中其他boards的代码。
+
+## 参考学习资料
+
+- 可以参考zmk仓库中其他boards的代码。
+- 可以zmk官方文档，例如：https://zmk.dev/blog/2025/12/09/zephyr-4-1
