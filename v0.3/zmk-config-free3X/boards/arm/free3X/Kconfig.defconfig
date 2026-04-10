@@ -1,0 +1,31 @@
+# SPDX-License-Identifier: MIT
+
+if BOARD_FREE3X_LEFT || BOARD_FREE3X_RIGHT
+
+config BOARD
+	default "free3X"
+
+config ZMK_KEYBOARD_NAME
+	default "free3X"
+
+config ZMK_SPLIT
+	default y
+
+if BOARD_FREE3X_LEFT
+
+config ZMK_SPLIT_ROLE_CENTRAL
+    default y
+
+endif # BOARD_FREE3X_LEFT
+
+if USB_DEVICE_STACK
+
+config USB_NRFX
+    default y
+
+endif # USB_DEVICE_STACK
+
+config BT_CTLR
+	default BT
+
+endif # BOARD_FREE3X_LEFT || BOARD_FREE3X_RIGHT

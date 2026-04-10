@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: MIT
+
+if BOARD_SHIDUO3400
+
+config ZMK_KEYBOARD_NAME
+	default "shiduo3400"
+
+if USB_DEVICE_STACK
+
+config USB_NRFX
+    default y
+
+endif # USB_DEVICE_STACK
+
+config BT_CTLR
+	default BT
+
+endif # BOARD_SHIDUO3400

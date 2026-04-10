@@ -1,0 +1,5 @@
+# SPDX-License-Identifier: MIT
+
+config BOARD_SHIDUO3400
+	bool "shiduo3400"
+	depends on SOC_NRF52840_QIAA

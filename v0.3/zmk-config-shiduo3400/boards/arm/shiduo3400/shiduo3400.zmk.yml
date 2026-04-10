@@ -1,0 +1,10 @@
+file_format: "1"
+id: shiduo3401
+name: Shiduo3401
+type: board
+arch: arm
+features:
+  - keys
+outputs:
+  - usb
+url: https://github.com/Poet-Li/zmk-config-shiduo3400
