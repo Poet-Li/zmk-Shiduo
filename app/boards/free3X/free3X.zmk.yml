@@ -1,0 +1,13 @@
+file_format: "1"
+id: free3X
+name: free3X
+type: board
+arch: arm
+features:
+  - keys
+outputs:
+  - usb
+  - ble
+siblings:
+  - free3X_left//zmk
+  - free3X_right//zmk

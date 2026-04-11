@@ -18,6 +18,16 @@ west build -p -b planck//zmk
 west build -p -b nice_nano//zmk -- -DSHIELD=corne_left
 west build -p -d build/glide_left -b xiao_ble//zmk -- -DSHIELD=glide_left
 west build -p -d build/glide_right -b xiao_ble//zmk -- -DSHIELD=glide_right
+west build -p -d build/free3X_left -b free3X_left/nrf52840/zmk
+west build -p -d build/free3X_right -b free3X_right/nrf52840/zmk
+west build -p -d build/shiduo3400 -b shiduo3400/nrf52840/zmk
+
+```
+-p：每次构建前清理（pristine），防止旧文件影响新编译。
+-d：指定 build 输出目录。
+-b：指定目标开发板型号。
+```
+
 
 # 注意
 注意xiao_ble的引脚编号，和我在eda里随手0-13排的是不一样的

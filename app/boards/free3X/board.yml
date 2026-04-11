@@ -1,0 +1,11 @@
+boards:
+  - name: free3X_left
+    socs:
+      - name: nrf52840
+        variants:
+          - name: zmk
+  - name: free3X_right
+    socs:
+      - name: nrf52840
+        variants:
+          - name: zmk

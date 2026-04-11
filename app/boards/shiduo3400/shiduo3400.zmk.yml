@@ -1,0 +1,10 @@
+file_format: "1"
+id: shiduo3400
+name: shiduo3400
+type: board
+arch: arm
+features:
+  - keys
+outputs:
+  - usb
+  - ble
