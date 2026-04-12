@@ -1,17 +1,25 @@
 # SPDX-License-Identifier: MIT
 
-# Enable MPU
+# ── 处理器安全 ──────────────────────────────────────────────
+# 启用 ARM MPU，nRF52840 基础安全配置，必须保留。
 CONFIG_ARM_MPU=y
 
-# enable pinctrl
+# ── 引脚控制 ────────────────────────────────────────────────
+# nrfx 驱动依赖，必须保留。
 CONFIG_PINCTRL=y
 
-# enable GPIO
+# ── GPIO ────────────────────────────────────────────────────
+# 键盘矩阵扫描依赖，必须保留。
 CONFIG_GPIO=y
 
+# ── Flash 分区与固件格式 ─────────────────────────────────────
+# 从 DTS code_partition 加载，避免覆盖 Bootloader，必须保留。
 CONFIG_USE_DT_CODE_PARTITION=y
+# 生成 .uf2 可拖拽刷机文件，必须保留。
 CONFIG_BUILD_OUTPUT_UF2=y
 
+# ── 键盘设置持久化 ───────────────────────────────────────────
+# 右手板是外设端（Peripheral），不直接连接电脑，但同样需要存储蓝牙绑定信息，以下均保留。
 CONFIG_MPU_ALLOW_FLASH_WRITE=y
 CONFIG_NVS=y
 CONFIG_SETTINGS_NVS=y
@@ -19,5 +27,12 @@ CONFIG_FLASH=y
 CONFIG_FLASH_PAGE_LAYOUT=y
 CONFIG_FLASH_MAP=y
 
+# ── 输出接口 ────────────────────────────────────────────────
+# 【可删除】右手板是分体外设端，只和左手板（Central）通过 BLE 内部通信，
+# 不直接连接电脑，不走 USB HID 流程。
+# ZMK Kconfig 里 ZMK_USB 本身 depends on ZMK_SPLIT_ROLE_CENTRAL，
+# 右手板不设 CENTRAL，所以此行实际上不生效（被 Kconfig 依赖关系静默忽略），
+# 可以删除以保持配置整洁，但留着也不会出错。
 CONFIG_ZMK_USB=y
+# 启用蓝牙，右手板通过 BLE 与左手板通信，必须保留。
 CONFIG_ZMK_BLE=y

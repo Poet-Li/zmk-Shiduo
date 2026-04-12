@@ -1,15 +1,23 @@
+# ── 仅左手 Shield 生效的配置 ────────────────────────────────
 if SHIELD_GLIDE_LEFT
 
+# 蓝牙广播和 USB HID 显示的键盘名称
 config ZMK_KEYBOARD_NAME
     default "Glide"
 
+# 将左手 Shield 设为分体键盘的「主机端」（Central）。
+# 主机端汇总右手按键数据并上报给电脑；右手 Shield 不写此项，自动成为外设端。
 config ZMK_SPLIT_ROLE_CENTRAL
     default y
 
 endif
 
+# ── 左右手 Shield 共用的配置 ─────────────────────────────────
 if SHIELD_GLIDE_LEFT || SHIELD_GLIDE_RIGHT
 
+# 启用 ZMK 分体键盘支持，左右两边通过 BLE 内部通信。
+# 注意：Glide 是 Shield（扩展板），底板（如 xiao_ble）的 defconfig 提供
+# PINCTRL、GPIO、FLASH 等基础驱动，Shield 这里只需声明 ZMK 层面的分体功能。
 config ZMK_SPLIT
     default y
 

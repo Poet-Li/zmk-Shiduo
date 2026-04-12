@@ -14,13 +14,21 @@ west sdk install //如果运行不了，就跑下面那条
 # 编译示例
 .\.venv\Scripts\Activate.ps1
 cd app
-west build -p -b planck//zmk
-west build -p -b nice_nano//zmk -- -DSHIELD=corne_left
+
 west build -p -d build/glide_left -b xiao_ble//zmk -- -DSHIELD=glide_left
 west build -p -d build/glide_right -b xiao_ble//zmk -- -DSHIELD=glide_right
+west build -p -d build/glide_settings_reset -b xiao_ble//zmk -- -DSHIELD=settings_reset
+
 west build -p -d build/free3X_left -b free3X_left/nrf52840/zmk
 west build -p -d build/free3X_right -b free3X_right/nrf52840/zmk
+west build -p -d build/free3X_left_settings_reset -b free3X_left/nrf52840/zmk -- -DSHIELD=settings_reset
+west build -p -d build/free3X_right_settings_reset -b free3X_right/nrf52840/zmk -- -DSHIELD=settings_reset
+
 west build -p -d build/shiduo3400 -b shiduo3400/nrf52840/zmk
+west build -p -d build/shiduo3400_settings_reset -b shiduo3400/nrf52840/zmk -- -DSHIELD=settings_reset
+
+west build -p -b planck//zmk
+west build -p -b nice_nano//zmk -- -DSHIELD=corne_left
 
 ```
 -p：每次构建前清理（pristine），防止旧文件影响新编译。

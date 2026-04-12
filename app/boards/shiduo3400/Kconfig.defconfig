@@ -2,9 +2,12 @@
 
 if BOARD_SHIDUO3400
 
+# 蓝牙广播和 USB HID 显示的键盘名称
 config ZMK_KEYBOARD_NAME
     default "shiduo3400"
 
+# 仅当 USB 设备栈被启动时（由 defconfig 里的 CONFIG_ZMK_USB=y 触发），
+# 才启用 nRF52 原生 USB 驱动（USB_NRFX）。
 if USB_DEVICE_STACK
 
 config USB_NRFX
@@ -12,6 +15,7 @@ config USB_NRFX
 
 endif # USB_DEVICE_STACK
 
+# 启用蓝牙控制器。BT 符号跟随 ZMK_BLE 开关，这行等于"跟随蓝牙开关"。
 config BT_CTLR
     default BT
 

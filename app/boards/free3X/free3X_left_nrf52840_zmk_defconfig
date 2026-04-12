@@ -1,23 +1,44 @@
 # SPDX-License-Identifier: MIT
 
-# Enable MPU
+# ── 处理器安全 ──────────────────────────────────────────────
+# 启用 ARM 内存保护单元（MPU），防止固件越界访问内存。
+# 是 nRF52840 的基础安全配置，必须保留。
 CONFIG_ARM_MPU=y
 
-# enable pinctrl
+# ── 引脚控制 ────────────────────────────────────────────────
+# 启用 Zephyr pinctrl 子系统，用于在 DTS 中声明引脚复用。
+# nRF52840 的 nrfx 底层驱动内部依赖 pinctrl，删除后编译会报错，必须保留。
 CONFIG_PINCTRL=y
 
-# enable GPIO
+# ── GPIO ────────────────────────────────────────────────────
+# 启用 GPIO 驱动。键盘矩阵扫描直接依赖 GPIO，必须保留。
 CONFIG_GPIO=y
 
+# ── Flash 分区与固件格式 ─────────────────────────────────────
+# 让固件从 DTS code_partition 起始地址加载，而不是 Flash 地址 0。
+# 这样固件不会覆盖 Bootloader 区域，必须保留。
 CONFIG_USE_DT_CODE_PARTITION=y
+# 编译额外生成 .uf2 文件，可直接拖入 UF2 Bootloader 虚拟 U 盘刷机，必须保留。
 CONFIG_BUILD_OUTPUT_UF2=y
 
+# ── 键盘设置持久化（蓝牙配对、层状态等）───────────────────────
+# 允许受 MPU 保护的代码写入 Flash（存储配对信息等），必须保留。
 CONFIG_MPU_ALLOW_FLASH_WRITE=y
+# 启用 NVS（Non-Volatile Storage）Flash 存储，ZMK 用它保存蓝牙绑定，必须保留。
 CONFIG_NVS=y
+# 使用 NVS 作为 Zephyr Settings 子系统的后端，ZMK 所有持久化配置依赖此项，必须保留。
 CONFIG_SETTINGS_NVS=y
+# Flash 设备驱动，NVS 的依赖项，必须保留。
 CONFIG_FLASH=y
+# Flash 分页布局支持（擦写操作需要），必须保留。
 CONFIG_FLASH_PAGE_LAYOUT=y
+# Flash 分区映射，用于解析 DTS 里的 partitions 节点，必须保留。
 CONFIG_FLASH_MAP=y
 
+# ── 输出接口 ────────────────────────────────────────────────
+# 启用 USB HID 输出。左手板有 USB 口，插线时作为有线键盘使用，必须保留。
 CONFIG_ZMK_USB=y
+# 启用蓝牙 HID 输出（BLE HID over GATT），无线模式使用，必须保留。
 CONFIG_ZMK_BLE=y
+# 关闭 BLE 2M PHY，提升与 Win11 主机的兼容性。
+CONFIG_BT_CTLR_PHY_2M=n

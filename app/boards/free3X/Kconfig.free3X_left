@@ -1,8 +1,17 @@
 # SPDX-License-Identifier: MIT
 
+# 左手板硬件能力声明文件。
+# board.yml 中 name: free3X_left 会自动生成对应的 BOARD_FREE3X_LEFT 符号。
 config BOARD_FREE3X_LEFT
+    # 指定芯片型号为 nRF52840-QIAA（QFN73 封装，1MB Flash，256KB RAM）
     select SOC_NRF52840_QIAA
+    # 声明此板已按 ZMK 规范完整配置（Flash 分区、Bootloader 对接等）。
+    # 若缺少此标记，编译时 ZMK 会打印警告。
+    # 条件：仅在使用 nrf52840/zmk 变体时生效（即 board.yml 里 variant: zmk）
     select ZMK_BOARD_COMPAT if BOARD_FREE3X_LEFT_NRF52840_ZMK
+    # 以下三条启用 Zephyr「保留内存」子系统，用于重启时保留引导模式标志位。
+    # 配合 nrf52840_uf2_boot_mode.dtsi，可让 ZMK 通过软件触发进入 UF2 Bootloader 刷机模式
+    # （即双击 Reset、或 ZMK 的 &bootloader 按键）。纯按键键盘也需要保留这三条。
     imply RETAINED_MEM if BOARD_FREE3X_LEFT_NRF52840_ZMK
     imply RETENTION if BOARD_FREE3X_LEFT_NRF52840_ZMK
     imply RETENTION_BOOT_MODE if BOARD_FREE3X_LEFT_NRF52840_ZMK

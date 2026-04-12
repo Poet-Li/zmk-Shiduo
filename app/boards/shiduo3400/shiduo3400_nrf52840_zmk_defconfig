@@ -1,23 +1,39 @@
 # SPDX-License-Identifier: MIT
 
-# Enable MPU
+# ── 处理器安全 ──────────────────────────────────────────────
+# 启用 ARM 内存保护单元（MPU），nRF52840 基础安全配置，必须保留。
 CONFIG_ARM_MPU=y
 
-# enable pinctrl
+# ── 引脚控制 ────────────────────────────────────────────────
+# nRF52840 的 nrfx 底层驱动内部依赖 pinctrl，必须保留。
 CONFIG_PINCTRL=y
 
-# enable GPIO
+# ── GPIO ────────────────────────────────────────────────────
+# 启用 GPIO 驱动，键盘矩阵扫描直接依赖，必须保留。
 CONFIG_GPIO=y
 
+# ── Flash 分区与固件格式 ─────────────────────────────────────
+# 从 DTS code_partition 起始地址加载固件，不覆盖 Bootloader 区域，必须保留。
 CONFIG_USE_DT_CODE_PARTITION=y
+# 生成 .uf2 文件，可直接拖入 UF2 Bootloader 虚拟 U 盘刷机，必须保留。
 CONFIG_BUILD_OUTPUT_UF2=y
 
+# ── 键盘设置持久化（蓝牙配对信息等）─────────────────────────
+# 允许 MPU 保护下的代码写 Flash（存储配对信息），必须保留。
 CONFIG_MPU_ALLOW_FLASH_WRITE=y
+# NVS Flash 存储，ZMK 用于保存蓝牙绑定，必须保留。
 CONFIG_NVS=y
+# 使用 NVS 作为 Settings 后端，ZMK 所有持久化配置依赖此项，必须保留。
 CONFIG_SETTINGS_NVS=y
+# Flash 设备驱动，NVS 的依赖项，必须保留。
 CONFIG_FLASH=y
+# Flash 分页布局支持（擦写操作需要），必须保留。
 CONFIG_FLASH_PAGE_LAYOUT=y
+# Flash 分区映射，解析 DTS 的 partitions 节点，必须保留。
 CONFIG_FLASH_MAP=y
 
+# ── 输出接口 ────────────────────────────────────────────────
+# 启用 USB HID 输出，插线时作为有线键盘使用，必须保留。
 CONFIG_ZMK_USB=y
+# 启用蓝牙 HID 输出（BLE HID over GATT），无线模式使用，必须保留。
 CONFIG_ZMK_BLE=y

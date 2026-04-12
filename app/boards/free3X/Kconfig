@@ -1,7 +1,13 @@
 # SPDX-License-Identifier: MIT
 
+# 启用 nRF52840 的 DC-DC 电源转换器模式。
+# DC-DC 比默认的 LDO（线性稳压）效率更高，可显著降低功耗、延长电池续航。
+# 对于无线键盘来说这条几乎是必要的，保留。
 config BOARD_ENABLE_DCDC
     bool "Enable DCDC mode"
+    # 激活 nRF52 系列芯片的 DC-DC 稳压驱动
     select SOC_DCDC_NRF52X
+    # 默认开启，无需用户手动打开
     default y
+    # 仅在编译 free3X 左手或右手板时生效
     depends on (BOARD_FREE3X_LEFT || BOARD_FREE3X_RIGHT)

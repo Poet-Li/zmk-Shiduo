@@ -1,26 +1,38 @@
 # SPDX-License-Identifier: MIT
 
+# ── 仅左手板生效的配置 ──────────────────────────────────────
 if BOARD_FREE3X_LEFT
 
+# 蓝牙广播和 USB HID 显示的键盘名称
 config ZMK_KEYBOARD_NAME
     default "free3X"
 
+# 将左手板设为分体键盘的「主机端」（Central）。
+# 主机端负责通过 BLE 收集右手板按键数据，并统一上报给电脑。
+# 右手板不写此项，自动成为「外设端」（Peripheral）。
 config ZMK_SPLIT_ROLE_CENTRAL
     default y
 
 endif # BOARD_FREE3X_LEFT
 
+# ── 左右手板共用的配置 ──────────────────────────────────────
 if BOARD_FREE3X_LEFT || BOARD_FREE3X_RIGHT
 
+# 编译产物统一使用 "free3X" 作为 BOARD 名，便于识别固件归属
 config BOARD
     default "free3X"
 
+# 启用 ZMK 分体键盘支持，左右两板通过 BLE 内部通信
 config ZMK_SPLIT
     default y
 
+# 启用蓝牙控制器（BT Controller）。
+# BT 是 Kconfig 内置符号，跟随 ZMK_BLE 开关自动为 y，这行等于"跟随蓝牙开关"。
 config BT_CTLR
     default BT
 
+# 仅当 USB 设备栈被启动时（由 defconfig 里的 CONFIG_ZMK_USB=y 触发），
+# 才启用 nRF52 原生 USB 驱动（USB_NRFX）。
 if USB_DEVICE_STACK
 
 config USB_NRFX

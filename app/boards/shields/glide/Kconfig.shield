@@ -1,8 +1,13 @@
 # Copyright (c) 2020 Pete Johanson
 # SPDX-License-Identifier: MIT
 
+# Shield 自动检测：通过检查编译命令 -DSHIELD= 传入的列表来判断当前编译的是哪半边。
+# def_bool 表示"由构建系统自动推导，不在 menuconfig 中显示"。
+
+# 当 -DSHIELD=glide_left 时，此符号为 y，否则为 n
 config SHIELD_GLIDE_LEFT
     def_bool $(shields_list_contains,glide_left)
 
+# 当 -DSHIELD=glide_right 时，此符号为 y，否则为 n
 config SHIELD_GLIDE_RIGHT
     def_bool $(shields_list_contains,glide_right)
