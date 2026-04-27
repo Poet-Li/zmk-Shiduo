@@ -1,27 +1,211 @@
 /*
- * Copyright (c) 2020 The ZMK Contributors
- *
- * SPDX-License-Identifier: MIT
- */
+* Copyright (c) 2021 The ZMK Contributors
+*
+* SPDX-License-Identifier: MIT
+*/
 
 #include <behaviors.dtsi>
-#include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/keys.h>
 
 / {
-        keymap {
-                compatible = "zmk,keymap";
+    behaviors {
+        MY_MT: MY_MT {
+            compatible = "zmk,behavior-hold-tap";
+            label = "MY_MT";
+            bindings = <&kp>, <&kp>;
 
-                default_layer {
-                        display-name = "Default Layer";
-                        bindings = <
-   &kp Q &kp W &kp E &kp R &kp T   &kp Y &kp U  &kp I     &kp O   &kp P    
-   &kp A &kp S &kp D &kp F &kp G   &kp H &kp J  &kp K     &kp L   &kp SEMI 
-   &kp Z &kp X &kp C &kp V &kp B   &kp N &kp M  &kp COMMA &kp DOT &kp FSLH 
-                  &kp LGUI  &kp SPACE   &kp RET  &kp RALT
-                        >;
-                };
-
-
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            flavor = "tap-preferred";
         };
+
+        tapDanceBootloader: tapDanceBootloader {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TAPDANCEBOOTLOADER";
+            #binding-cells = <0>;
+            bindings = <&none>, <&bootloader>;
+        };
+    };
+
+    combos {
+        compatible = "zmk,combos";
+
+        tab {
+            bindings = <&kp TAB>;
+            key-positions = <11 12>;
+        };
+
+        f1 {
+            bindings = <&kp F1>;
+            key-positions = <0 10>;
+        };
+
+        f2 {
+            bindings = <&kp F2>;
+            key-positions = <1 11>;
+        };
+
+        f3 {
+            bindings = <&kp F3>;
+            key-positions = <2 12>;
+        };
+
+        f4 {
+            bindings = <&kp F4>;
+            key-positions = <3 13>;
+        };
+
+        f5 {
+            bindings = <&kp F5>;
+            key-positions = <4 14>;
+        };
+
+        f6 {
+            bindings = <&kp F6>;
+            key-positions = <5 15>;
+        };
+
+        f7 {
+            bindings = <&kp F7>;
+            key-positions = <6 16>;
+        };
+
+        f8 {
+            bindings = <&kp F8>;
+            key-positions = <7 17>;
+        };
+
+        f9 {
+            bindings = <&kp F9>;
+            key-positions = <8 18>;
+        };
+
+        f10 {
+            bindings = <&kp F10>;
+            key-positions = <9 19>;
+        };
+
+        f11 {
+            bindings = <&kp F11>;
+            key-positions = <18 28>;
+        };
+
+        f12 {
+            bindings = <&kp F12>;
+            key-positions = <19 29>;
+        };
+
+        del {
+            bindings = <&kp DEL>;
+            key-positions = <32 25>;
+        };
+
+        MO_CONFIG_LAYER {
+            bindings = <&mo 2>;
+            key-positions = <30 31 32 33>;
+        };
+
+        home {
+            bindings = <&kp HOME>;
+            key-positions = <20 10>;
+        };
+
+        end {
+            bindings = <&kp END>;
+            key-positions = <21 11>;
+        };
+
+        pgup {
+            bindings = <&kp PG_UP>;
+            key-positions = <22 12>;
+        };
+
+        pgdn {
+            bindings = <&kp PG_DN>;
+            key-positions = <23 13>;
+        };
+
+        capslock {
+            bindings = <&kp CAPS>;
+            key-positions = <33 26>;
+        };
+
+        ctrl {
+            bindings = <&kp LCTRL>;
+            key-positions = <10 19>;
+        };
+
+        alt {
+            bindings = <&kp LEFT_ALT>;
+            key-positions = <13 16>;
+        };
+
+        gui {
+            bindings = <&kp LEFT_GUI>;
+            key-positions = <14 15>;
+        };
+
+        toggleAlterLayer {
+            bindings = <&tog 1>;
+            key-positions = <30 23>;
+        };
+
+        volumeDown {
+            bindings = <&kp C_VOLUME_DOWN>;
+            key-positions = <27 26>;
+        };
+
+        volumeUp {
+            bindings = <&kp C_VOLUME_UP>;
+            key-positions = <28 29>;
+        };
+
+        muteVolume {
+            bindings = <&kp C_MUTE>;
+            key-positions = <28 27>;
+        };
+
+        comboEsc {
+            bindings = <&kp ESCAPE>;
+            key-positions = <2 0 1>;
+        };
+
+        bootloader {
+            bindings = <&tapDanceBootloader>;
+            key-positions = <9 19 29>;
+            layers = <2>;
+        };
+    };
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        default_layer {
+            bindings = <
+&kp Q                  &kp W  &kp E  &kp R              &kp T              &kp Y              &kp U              &kp I      &kp O    &kp P
+&MY_MT LEFT_CONTROL A  &kp S  &kp D  &MY_MT LEFT_ALT F  &MY_MT LEFT_GUI G  &MY_MT LEFT_GUI H  &MY_MT LEFT_ALT J  &kp K      &kp L    &MY_MT LEFT_CONTROL ENTER
+&kp Z                  &kp X  &kp C  &kp V              &kp B              &kp N              &kp M              &kp COMMA  &kp DOT  &kp SLASH
+                                     &mo 1              &kp SPACE          &kp BACKSPACE      &kp LEFT_SHIFT
+            >;
+        };
+
+        alter_layer {
+            bindings = <
+&kp LEFT           &kp UP     &kp DOWN   &kp RIGHT              &kp LPAR              &kp RPAR              &kp N7              &kp N8  &kp N9  &kp COLON
+&MY_MT LCTRL PLUS  &kp MINUS  &kp EQUAL  &MY_MT LEFT_ALT UNDER  &MY_MT LEFT_GUI LBKT  &MY_MT LEFT_GUI RBKT  &MY_MT LEFT_ALT N4  &kp N5  &kp N6  &MY_MT LCTRL SEMI
+&kp DQT            &kp SQT    &kp GRAVE  &kp TILDE              &kp PIPE              &kp BACKSLASH         &kp N1              &kp N2  &kp N3  &kp N0
+                                         &trans                 &trans                &trans                &trans
+            >;
+        };
+
+        config {
+            bindings = <
+&bt BT_SEL 0  &bt BT_SEL 1    &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &none  &none  &none  &none  &none
+&bt BT_CLR    &bt BT_CLR_ALL  &none         &none         &none         &none  &none  &none  &none  &none
+&bootloader   &none           &none         &none         &none         &none  &none  &none  &none  &none
+                                            &none         &none         &none  &none
+            >;
+        };
+    };
 };
